@@ -24,6 +24,9 @@ loaders_and_params = OrderedDict({
         'compress_pos_emb',
         'transformers_info'
     ],
+    'petals': [
+        'trust_remote_code',
+    ],
     'ExLlama_HF': [
         'gpu_split',
         'max_seq_len',
@@ -110,6 +113,36 @@ loaders_and_params = OrderedDict({
 
 loaders_samplers = {
     'Transformers': {
+        'temperature',
+        'top_p',
+        'top_k',
+        'typical_p',
+        'epsilon_cutoff',
+        'eta_cutoff',
+        'tfs',
+        'top_a',
+        'repetition_penalty',
+        'repetition_penalty_range',
+        'encoder_repetition_penalty',
+        'no_repeat_ngram_size',
+        'min_length',
+        'seed',
+        'do_sample',
+        'penalty_alpha',
+        'num_beams',
+        'length_penalty',
+        'early_stopping',
+        'mirostat_mode',
+        'mirostat_tau',
+        'mirostat_eta',
+        'guidance_scale',
+        'negative_prompt',
+        'ban_eos_token',
+        'add_bos_token',
+        'skip_special_tokens',
+        'auto_max_new_tokens',
+    },
+    'petals': {
         'temperature',
         'top_p',
         'top_k',

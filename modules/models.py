@@ -60,6 +60,7 @@ def load_model(model_name, loader=None):
         'ExLlama': ExLlama_loader,
         'ExLlama_HF': ExLlama_HF_loader,
         'ctransformers': ctransformers_loader,
+        'petals': petals_loader,
     }
 
     p = Path(model_name)
@@ -323,6 +324,19 @@ def ExLlama_HF_loader(model_name):
 
     return ExllamaHF.from_pretrained(model_name)
 
+def petals_loader(model_name):
+    from petals import AutoDistributedModelForCausalLM
+    LoaderClass = AutoDistributedModelForCausalLM
+
+    # Simple model loading from HuggingFace
+    model = LoaderClass.from_pretrained(model_name, trust_remote_code=shared.args.trust_remote_code)
+    if torch.backends.mps.is_available():
+        device = torch.device('mps')
+        model = model.to(device)
+    else:
+        model = model.cuda()
+
+    return model
 
 def get_max_memory_dict():
     max_memory = {}
