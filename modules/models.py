@@ -68,6 +68,7 @@ def load_model(model_name, loader=None):
         model_name = p.parts[-1]
 
     if loader is None:
+        logger.info(f"Loader: {shared.args.loader}")
         if shared.args.loader is not None:
             loader = shared.args.loader
         else:
@@ -85,6 +86,7 @@ def load_model(model_name, loader=None):
         if model is None:
             return None, None
         else:
+            logger.info(f"Loading tokenizer {model_name}...")
             tokenizer = load_tokenizer(model_name, model)
 
     # Hijack attention with xformers
@@ -336,7 +338,9 @@ def petals_loader(model_name):
     else:
         model = model.cuda()
 
-    return model
+    tokenizer = AutoTokenizer.from_pretrained(model_name, use_fast=False, add_bos_token=False)
+
+    return model, tokenizer
 
 def get_max_memory_dict():
     max_memory = {}
