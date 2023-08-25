@@ -243,9 +243,6 @@ def generate_reply_HF(question, original_question, seed, state, stopping_strings
     for k in ['max_new_tokens', 'do_sample', 'temperature', 'top_p', 'typical_p', 'repetition_penalty', 'repetition_penalty_range', 'encoder_repetition_penalty', 'top_k', 'min_length', 'no_repeat_ngram_size', 'num_beams', 'penalty_alpha', 'length_penalty', 'early_stopping', 'tfs', 'top_a', 'mirostat_mode', 'mirostat_tau', 'mirostat_eta', 'guidance_scale']:
         generate_params[k] = state[k]
 
-    if hasattr(shared.model, '__webui_session'):
-        generate_params['session'] = shared.model.__webui_session
-
     if state['negative_prompt'] != '':
         generate_params['negative_prompt_ids'] = encode(state['negative_prompt'])
 
@@ -309,6 +306,11 @@ def generate_reply_HF(question, original_question, seed, state, stopping_strings
 
             def generate_with_callback(callback=None, *args, **kwargs):
                 kwargs['stopping_criteria'].append(Stream(callback_func=callback))
+
+                if hasattr(shared.model, '__webui_session'):
+                    kwargs['session'] = shared.model.__webui_session
+                    logger.info(f"{kwargs['session']}")
+
                 clear_torch_cache()
                 with torch.no_grad():
                     shared.model.generate(**kwargs)

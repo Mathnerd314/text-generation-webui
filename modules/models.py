@@ -342,6 +342,7 @@ def petals_loader(model_name):
 
     model.__webui_session = model.inference_session(max_length=2048) # shared.settings['truncation_length'])
     model.__webui_session.__enter__()
+    logger.info(f'{model.__webui_session}')
 
     return model, tokenizer
 
