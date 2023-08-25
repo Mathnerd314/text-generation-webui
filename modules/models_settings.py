@@ -88,7 +88,7 @@ def apply_model_settings_to_state(model, state):
     model_settings = get_model_settings_from_yamls(model)
     if 'loader' not in model_settings:
         # If the user specified a loader, let them keep using it, otherwise set it.
-        if state['loader'] == None
+        if state['loader'] == None:
             loader = infer_loader(model)
             if 'wbits' in model_settings and type(model_settings['wbits']) is int and model_settings['wbits'] > 0:
                 loader = 'AutoGPTQ'
