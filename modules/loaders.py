@@ -25,7 +25,22 @@ loaders_and_params = OrderedDict({
         'transformers_info'
     ],
     'petals': [
+        'cpu_memory',
+        'gpu_memory',
         'trust_remote_code',
+        'load_in_8bit',
+        'bf16',
+        'cpu',
+        'disk',
+        'auto_devices',
+        'load_in_4bit',
+        'use_double_quant',
+        'quant_type',
+        'compute_dtype',
+        'trust_remote_code',
+        'alpha_value',
+        'compress_pos_emb',
+        'transformers_info'
     ],
     'ExLlama_HF': [
         'gpu_split',

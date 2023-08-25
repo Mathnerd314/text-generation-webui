@@ -340,6 +340,9 @@ def petals_loader(model_name):
 
     tokenizer = AutoTokenizer.from_pretrained(model_name, use_fast=False, add_bos_token=False)
 
+    model.session = model.inference_session(max_length=state['truncation_length'])
+    model.session.__enter__()
+
     return model, tokenizer
 
 def get_max_memory_dict():
@@ -374,6 +377,9 @@ def clear_torch_cache():
 
 
 def unload_model():
+    if hasttr(shared.model, "session"):
+        shared.model.session.__exit__()
+
     shared.model = shared.tokenizer = None
     shared.lora_names = []
     shared.model_dirty_from_training = False

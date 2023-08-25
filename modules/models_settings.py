@@ -87,12 +87,11 @@ def update_model_parameters(state, initial=False):
 def apply_model_settings_to_state(model, state):
     model_settings = get_model_settings_from_yamls(model)
     if 'loader' not in model_settings:
-        loader = infer_loader(model)
-        if 'wbits' in model_settings and type(model_settings['wbits']) is int and model_settings['wbits'] > 0:
-            loader = 'AutoGPTQ'
-
-        # If the user is using an alternative loader for the same model type, let them keep using it
-        if not (loader == 'AutoGPTQ' and state['loader'] in ['GPTQ-for-LLaMa', 'ExLlama', 'ExLlama_HF']) and not (loader == 'llama.cpp' and state['loader'] in ['llamacpp_HF', 'ctransformers']):
+        # If the user specified a loader, let them keep using it, otherwise set it.
+        if state['loader'] == None
+            loader = infer_loader(model)
+            if 'wbits' in model_settings and type(model_settings['wbits']) is int and model_settings['wbits'] > 0:
+                loader = 'AutoGPTQ'
             state['loader'] = loader
 
     for k in model_settings:
