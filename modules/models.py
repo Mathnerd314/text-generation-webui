@@ -340,8 +340,9 @@ def petals_loader(model_name):
 
     tokenizer = AutoTokenizer.from_pretrained(model_name, use_fast=False, add_bos_token=False)
 
-    model.__webui_session = model.inference_session(max_length=2048) # shared.settings['truncation_length'])
-    model.__webui_session.__enter__()
+    model.__webui_session_context = model.inference_session(max_length=2048) # shared.settings['truncation_length'])
+    model.__webui_session = model.__webui_session_context.__enter__()
+    logger.info(f'{model.__webui_session_context}')
     logger.info(f'{model.__webui_session}')
 
     return model, tokenizer
