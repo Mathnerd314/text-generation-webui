@@ -364,7 +364,7 @@ def get_max_memory_dict():
             suggestion -= 1000
 
         suggestion = int(round(suggestion / 1000))
-        logger.warning(f"Auto-assiging --gpu-memory {suggestion} for your GPU to try to prevent out-of-memory errors. You can manually set other values.")
+        logger.warning(f"Auto-assigning --gpu-memory {suggestion} for your GPU to try to prevent out-of-memory errors. You can manually set other values.")
         max_memory = {0: f'{suggestion}GiB', 'cpu': f'{shared.args.cpu_memory or 99}GiB'}
 
     return max_memory if len(max_memory) > 0 else None
@@ -377,7 +377,7 @@ def clear_torch_cache():
 
 
 def unload_model():
-    if hasttr(shared.model, "session"):
+    if hasattr(shared.model, "session"):
         shared.model.session.__exit__()
 
     shared.model = shared.tokenizer = None
